@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <vector>
+#include <algorithm>
 
 int main(int argv, char** argc)
 {
@@ -36,6 +37,8 @@ int main(int argv, char** argc)
     int winning_board = -1;
 
     int no_of_boards = bingo_boards.size()/25;
+    std::vector<int> winning_boards;
+    winning_boards.reserve(100);
 
     //[0:24] [25:49] [50:74] [75:99] + 24
     //  0  1  2  3  4
@@ -79,7 +82,7 @@ int main(int argv, char** argc)
                     int column_start = board_pos + column;
                     for(column = column_start; column < (column_start + 24); column += 5)
                     {
-                        if(bingo_boards[line] > 0 || (bingo_boards[line] == 0 && !seen_zero))
+                        if(bingo_boards[column] > 0 || (bingo_boards[column] == 0 && !seen_zero))
                         {
                             winner_column = false;
                             break;
@@ -87,9 +90,17 @@ int main(int argv, char** argc)
                     }
                     if(winner_line || winner_column)
                     {
-                        winner = true;
+                        // winner = true;
                         winning_no = bingo_numbers[i];
                         winning_board = j;
+                        if(!(std::find(winning_boards.begin(), winning_boards.end(), j) != winning_boards.end()))
+                        {
+                            winning_boards.push_back(j);
+                            if( winning_boards.size() == 100)
+                            {
+                                winner = true;
+                            }
+                        }
                         break;
                     }
                 }
@@ -99,6 +110,7 @@ int main(int argv, char** argc)
     }
 
     int sum = 0;
+    printf("Last man standing: %d with winning no %d\n", winning_board, winning_no);
     int winning_board_start_pos = winning_board * 25;
     for(int i = winning_board_start_pos ; i <= (winning_board_start_pos + 24); ++i)
     {
