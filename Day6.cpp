@@ -15,6 +15,8 @@ int main(int argv, char** argc)
         inputFile >> c;
     }
 
+    inputFile.close();
+
     long long fish_days[9] = {0};
 
     for(int i = 0; i < fish.size(); ++i)
