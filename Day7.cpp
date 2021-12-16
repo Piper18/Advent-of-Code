@@ -20,7 +20,7 @@ int main(int argv, char** argc)
         inputFile >> c;
     }
 
-    float sum = 0;
+    int sum = 0;
     float count = 0;
 
     for(int i = 0; i < x_positions.size(); ++i)
@@ -39,20 +39,20 @@ int main(int argv, char** argc)
     }
     printf("Fuel needed for part 1: %d\n", fuel_p1);
 
-    float mean = std::round(sum/count);
-    float fuel_p2 = 0;
+    int mean = std::floor(sum/x_positions.size());
+    int fuel_p2 = 0;
 
     for(int i = 0; i < x_positions.size(); ++i)
     {
-        float distance = std::abs(x_positions[i] - mean);
-        printf("Distance of position %f from mean %f: %f\n", x_positions[i], mean, distance);
+        int distance = std::abs(x_positions[i] - mean);
+        // printf("Distance of position %f from mean %f: %f\n", x_positions[i], mean, distance);
 
-        for(float j = 0; j <= distance; ++j)
+        for(int j = 0; j <= distance; ++j)
         {
             fuel_p2 += j;
         }
     }
-    printf("Fuel needed for part 2 %f\n", fuel_p2);
+    printf("Fuel needed for part 2 %d\n", fuel_p2);
 
     inputFile.close();
 
